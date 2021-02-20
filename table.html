@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid-19 (dN_6)</title>
+    <!-- favicon link -->
+    <link rel="shortcut icon" href="https://postman-toolboxes2.s3.amazonaws.com/assets/covid-19.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Jquery link -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Css styling -->
+    <style>
+      body{
+        background-color: rgb(235, 235, 235);
+      }
+      @media (min-width: 320px) and (max-width: 425px) {
+       h1{
+         font-size: 1.5rem;
+       }
+       img{
+         width: 50%;
+         padding-top: 2%;
+       }
+       .display-4{
+         font-size: 2rem;
+       }
+      }
+    </style>
+</head>
+<body>
+  <div class="jumbotron">
+    <h1 style="font-family: 'Roboto Mono', monospace;"><span  class="bg-danger" style=" padding: 1.5%; border-radius: 20px;"><a href="https://www.who.int/health-topics/coronavirus#tab=tab_1" target="_blank" style="text-decoration: none; color: rgb(24, 23, 23);">Covid-19</a></span>Infomation.  <img src="https://postman-toolboxes2.s3.amazonaws.com/assets/covid-19.png" alt=""></h1>
+
+    <h1 class="display-4">India Covid-19 Info</h1>
+    <p id="date"></p>
+
+    <!-- Table info -->
+
+    <table class="table table-hover">
+      <tr>
+        <th>Country :</th>
+        <td id="country"></td>
+      </tr>
+      <tr>
+        <th class="bg-warning">NewConfirmed :</th>
+        <td id="newconfirmed" class="bg-warning"></td>
+      </tr>
+      <tr>
+        <th>NewDeaths :</th>
+        <td  id="newdeaths"></td>
+      </tr>
+      <tr>
+        <th>NewRecovered :</th>
+        <td  id="newrecovered"></td>
+      </tr>
+      <tr>
+        <th>TotalConfirmed :</th>
+        <td  id="totalconfirmed"></td>
+      </tr>
+      <tr>
+        <th>TotalDeaths :</th>
+        <td  id="totaldeaths"></td>
+      </tr>
+      <tr>
+        <th>TotalRecovered :</th>
+        <td  id="totalrecovered"></td>
+      </tr>
+      <tr>
+        <th>DeathRatio :</th>
+        <td id="deathratio"></td>
+      </tr>
+    </table>
+    <h1 class="display-4">World Covid-19 Info</h1>
+    <p id="wdate"></p>
+    <table class="table table-hover">
+      <tr>
+        <th class="bg-warning">TotalConfirmed :</th>
+        <td class="bg-warning" id="wtc"></td>
+      </tr>
+      <tr>
+        <th>TotalDeaths :</th>
+        <td id="wtd"></td>
+      </tr>
+      <tr>
+        <th>TotalRecovered :</th>
+        <td id="wtre"></td>
+      </tr>
+      <tr>
+        <th>DeathRatio :</th>
+        <td id="wdr"></td>
+      </tr>
+    </table>
+    <hr class="my-4">
+        <p>To get latest updated data refresh the page. and For more details on Noval CoronaVirus update visit <a href="https://www.who.int/health-topics/coronavirus#tab=tab_1" target="_blank">(covid-19)</a></p>
+        <p class="lead">
+          <a onclick="window.location.reload();" class="btn btn-danger btn-lg" href="#" role="button">Refresh now</a>
+        </p>
+  </div>
+  <p style="text-align: center;">Developed by @dN_6</p>
+  <script>
+    function init() {
+              const url = "https://api.covid19api.com/summary";
+
+              $.get(url, function(data) {
+                  console.log(data.Global.TotalConfirmed);
+                  const date = data.Countries[76].Date;
+                  const co = data.Countries[76].Country;
+                  const nc = data.Countries[76].NewConfirmed;
+                  const nd = data.Countries[76].NewDeaths;
+                  const nr = data.Countries[76].NewRecovered;
+                  const tc = data.Countries[76].TotalConfirmed;
+                  const td = data.Countries[76].TotalDeaths;
+                  const tre = data.Countries[76].TotalRecovered;
+                  const deathRatio = (td/tc)*100;
+                  const dr = deathRatio.toFixed(2);
+
+                  $('#date').html(date)
+                  $('#country').html(co)
+                  $('#newconfirmed').html(nc)
+                  $('#newdeaths').html(nd)
+                  $('#newrecovered').html(nr)
+                  $('#totalconfirmed').html(tc)
+                  $('#totaldeaths').html(td)
+                  $('#totalrecovered').html(tre)
+                  $('#deathratio').html(dr + " %")
+
+                  const wdate = data.Global.Date;
+                  const wtc = data.Global.TotalConfirmed;
+                  const wtd = data.Global.TotalDeaths;
+                  const wtre = data.Global.TotalRecovered;
+                  const worldDeathRatio = (wtd/wtc)*100;
+                  const wdr = worldDeathRatio.toFixed(2);
+
+                  $("#wdate").html(wdate);
+                  $("#wtc").html(wtc);
+                  $("#wtd").html(wtd);
+                  $("#wtre").html(wtre);
+                  $("#wdr").html(wdr + " %");
+              });
+    }
+    init();
+
+  </script>
+</body>
+</html>
